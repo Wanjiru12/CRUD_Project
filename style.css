@@ -1,0 +1,86 @@
+/* Global styles */
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f0f8ff; /* Light blue background */
+  color: #333;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
+
+h1 {
+  text-align: center;
+  color: #1e90ff; /* Blue color for heading */
+}
+
+h2 {
+  color: #4682b4; /* Darker blue for subheading */
+}
+
+form {
+  background-color: #ffffff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 400px;
+}
+
+input,
+button {
+  width: 100%;
+  padding: 10px;
+  margin: 10px 0;
+  border: 2px solid #1e90ff; /* Blue border for input fields and buttons */
+  border-radius: 5px;
+}
+
+input:focus,
+button:hover {
+  border-color: #4682b4; /* Darker blue on focus and hover */
+}
+
+button {
+  background-color: #1e90ff;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #4682b4;
+}
+
+.contact-list {
+  margin-top: 20px;
+  width: 100%;
+  max-width: 600px;
+}
+
+.contact-item {
+  background-color: #f8f9fa;
+  padding: 15px;
+  margin: 10px 0;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.contact-item h3 {
+  color: #1e90ff;
+}
+
+button.edit-button {
+  background-color: #1e90ff;
+  color: white;
+  border: none;
+  padding: 8px 15px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+button.edit-button:hover {
+  background-color: #4682b4;
+}

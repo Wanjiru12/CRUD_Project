@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Contact Management App</title>
+    <link rel="stylesheet" href="style.css" />
+
+    <!-- React and ReactDOM CDN -->
+    <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  </head>
+  <body>
+    <div id="root"></div>
+
+    <!-- React JSX Code (App.js content directly embedded here) -->
+    <script type="text/babel">
+      const { useState, useEffect } = React;
+
+      const ContactList = ({ contacts, onEdit }) => {
+        return (
+          <div>
+            <h2>Contact List</h2>
+            {contacts.length === 0 ? (
+              <p>No contacts available.</p>
+            ) : (
+              contacts.map((contact) => (
+                <div key={contact.id}>
+                  <h3>{contact.name}</h3>
+                  <p>Email: {contact.email}</p>
+                  <p>Phone: {contact.phone}</p>
+                  <button onClick={() => onEdit(contact)}>Edit</button>
+                  <hr />
+                </div>
+              ))
+            )}
+          </div>
+        );
+      };
+
+      const ContactForm = ({ onSubmit, selectedContact }) => {
+        const [name, setName] = useState(
+          selectedContact ? selectedContact.name : ""
+        );
+        const [email, setEmail] = useState(
+          selectedContact ? selectedContact.email : ""
+        );
+        const [phone, setPhone] = useState(
+          selectedContact ? selectedContact.phone : ""
+        );
+
+        const handleSubmit = (e) => {
+          e.preventDefault();
+          const contact = {
+            id: selectedContact ? selectedContact.id : Date.now(),
+            name,
+            email,
+            phone,
+          };
+          onSubmit(contact);
+          setName("");
+          setEmail("");
+          setPhone("");
+        };
+
+        useEffect(() => {
+          if (selectedContact) {
+            setName(selectedContact.name);
+            setEmail(selectedContact.email);
+            setPhone(selectedContact.phone);
+          }
+        }, [selectedContact]);
+
+        return (
+          <form onSubmit={handleSubmit}>
+            <h2>{selectedContact ? "Edit Contact" : "Add New Contact"}</h2>
+            <input
+              type="text"
+              placeholder="Name"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              required
+            />
+            <br />
+            <input
+              type="email"
+              placeholder="Email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
+            />
+            <br />
+            <input
+              type="tel"
+              placeholder="Phone"
+              value={phone}
+              onChange={(e) => setPhone(e.target.value)}
+              required
+            />
+            <br />
+            <button type="submit">
+              {selectedContact ? "Update Contact" : "Add Contact"}
+            </button>
+          </form>
+        );
+      };
+
+      const App = () => {
+        const [contacts, setContacts] = useState([]);
+        const [selectedContact, setSelectedContact] = useState(null);
+
+        const addContact = (contact) => {
+          setContacts([...contacts, contact]);
+        };
+
+        const updateContact = (updatedContact) => {
+          setContacts(
+            contacts.map((contact) =>
+              contact.id === updatedContact.id ? updatedContact : contact
+            )
+          );
+          setSelectedContact(null); // Clear the form after update
+        };
+
+        const selectContactForUpdate = (contact) => {
+          setSelectedContact(contact);
+        };
+
+        return (
+          <div>
+            <h1>Contact Management</h1>
+            <ContactForm
+              onSubmit={selectedContact ? updateContact : addContact}
+              selectedContact={selectedContact}
+            />
+            <ContactList contacts={contacts} onEdit={selectContactForUpdate} />
+          </div>
+        );
+      };
+
+      ReactDOM.render(<App />, document.getElementById("root"));
+    </script>
+  </body>
+</html>
